@@ -29,3 +29,13 @@ var leafSimilar = function (root1, root2) {
     }
     return true;
 };
+var leafSimilar = function (root1, root2) {
+    var helper = function (node, r) {
+        if (!node) return r;
+        if (!node.left && !node.right) {
+            r += '/' + node.val;
+        }
+        return helper(node.left, helper(node.right, r));
+    };
+    return helper(root1, '') === helper(root2, '');
+};
