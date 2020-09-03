@@ -12,16 +12,19 @@
  * @param {TreeNode} root
  * @return {string}
  */
-var serialize = function(root) {
+var serialize = function (root) {
     var res = '';
-    var dfs = function(node){
-        if(!node) return;
-        res+=node.val+',';
+    var dfs = function (node) {
+        if (!node) {
+            res += '#,';
+            return;
+        }
+        res += node.val + ',';
         dfs(node.left);
         dfs(node.right);
-    };
+    }
     dfs(root);
-    return res.slice(0,res.length-1);
+    return res.slice(0, res.length - 1);
 };
 
 /**
@@ -30,14 +33,13 @@ var serialize = function(root) {
  * @param {string} data
  * @return {TreeNode}
  */
-var deserialize = function(data) {
+var deserialize = function (data) {
     var arr = data.split(',');
-    var helper = function(){
-        var val = arr.shift();
-        if(!val) return null;
-        var node = new TreeNode(Number(val));
-        var left = helper();
-        var right = helper();
+    var index = 0;
+    var helper = function () {
+        var val = arr[index++];
+        if (val === '#') return null;
+        var node = new TreeNode(val);
         node.left = helper();
         node.right = helper();
         return node;
