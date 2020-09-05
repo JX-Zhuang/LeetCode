@@ -10,27 +10,27 @@
  * @param {number} key
  * @return {TreeNode}
  */
-var successor = function (root) {
-    root = root.right;
-    while (root.left) root = root.left;
-    return root.val;
+var getMin = function (node) {
+    node = node.right;
+    while (node.left) node = node.left;
+    return node.val;
 }
-var predecessor = function (root) {
-    root = root.left;
-    while (root.right) root = root.right;
-    return root.val;
+var getMax = function (node) {
+    node = node.left;
+    while (node.right) node = node.right;
+    return node.val;
 }
 var deleteNode = function (root, key) {
-    if (!root) return root;
+    if (!root) return null;
     if (root.val > key) root.left = deleteNode(root.left, key);
     else if (root.val < key) root.right = deleteNode(root.right, key);
     else {
-        if (!root.left && !root.right) return null;
-        else if (root.right) {
-            root.val = successor(root);
+        if (!root.right && !root.left) return null;
+        if (root.right) {
+            root.val = getMin(root);
             root.right = deleteNode(root.right, root.val);
         } else {
-            root.val = predecessor(root);
+            root.val = getMax(root);
             root.left = deleteNode(root.left, root.val);
         }
     }
