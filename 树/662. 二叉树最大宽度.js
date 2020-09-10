@@ -18,12 +18,12 @@ var widthOfBinaryTree = function (root) {
         if (o[depth] === undefined) {
             o[depth] = pos;
         }
-        var n = pos - o[depth] + 1;
+        var n = pos - o[depth] + 1n;
         if (n > res) {
             res = n;
         }
         dfs(node.left, depth + 1n, pos * 2n);
-        dfs(node.right, depth + 1n, pos * 2n + 1);
+        dfs(node.right, depth + 1n, pos * 2n + 1n);
     };
     dfs(root, 0n, 0n);
     return res;
