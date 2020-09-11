@@ -18,8 +18,7 @@ var findJudge = function (N, trust) {
     }
     for (var key in persons) {
         var p = persons[key];
-        if (p.out.length !== 0) continue;
-        if (p.in.length === N - 1) {
+        if (p.in.length === N - 1 && p.out.length === 0) {
             return key;
         }
     }
