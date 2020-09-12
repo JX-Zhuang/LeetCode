@@ -14,18 +14,17 @@ var gardenNoAdj = function (N, paths) {
         graph[g1].push(g2);
         graph[g2].push(g1);
     }
-    console.log(graph)
     for (var i = 1; i <= N; i++) {
-        var flowers = [0, 1, 2, 3, 4];
+        var flowers = [1, 2, 3, 4];
         var gardens = graph[i];
         for (var j = 0; j < gardens.length; j++) {
             var g = gardens[j];
-            if (res[g - 1]) {
-                flowers.splice(res[g - 1], 1);
+            var flowerIndex = flowers.indexOf(res[g - 1]);
+            if (flowerIndex != -1) {
+                flowers.splice(flowerIndex, 1);
             }
         }
-        res[i - 1] = flowers[1];
-        console.log(res)
+        res[i - 1] = flowers[0];
     }
     return res;
 };
