@@ -11,32 +11,36 @@
  * @param {number} K
  * @return {number[]}
  */
-var distanceK = function(root, target, K) {
-    var l = 0;
-    var getLevel = function(node,level){
-        if(!node) return;
-        if(node.val === target.val){
-            l = level;
-            return ;
-        }
-        getLevel(node.left,level+1);
-        getLevel(node.right,level+1);
-    }
-    getLevel(root,0);
+var distanceK = function (root, target, K) {
     var res = [];
-    var dfs = function(node,level){
-        if(!node) return;
-        if(level === l + K ){
+    var subtreeAdd = function (node, dist) {
+        if (!node) return;
+        if (dist === K) {
             res.push(node.val);
+        } else {
+            subtreeAdd(node.left, dist + 1);
+            subtreeAdd(node.right, dist + 1);
         }
-        dfs(node.left,level+1);
-        dfs(node.right,level+1);
     }
-    dfs(root,0);
+    var dfs = function (node) {
+        if (!node) return -1;
+        if (node === target) {
+            subtreeAdd(node, 0);
+            return 1;
+        }
+        var l = dfs(node.left), r = dfs(node.right);
+        if (l !== -1) {
+            if (l === K) res.push(node.val);
+            subtreeAdd(node.right, l + 1);
+            return l + 1;
+        }
+        if (r !== -1) {
+            if (r === K) res.push(node.val);
+            subtreeAdd(node.left, r + 1);
+            return r + 1;
+        }
+        return -1;
+    }
+    dfs(root);
     return res;
 };
-
-    //    3
-    //  5   1
-    // 6 2 0 8
-    //  7 4 
