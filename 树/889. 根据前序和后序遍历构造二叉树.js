@@ -17,10 +17,10 @@ var constructFromPrePost = function (pre, post) {
         o[post[i]] = i;
     }
     var buildTree = function (leftPre, rightPre, leftPost, rightPost) {
-        if (leftPre + 1 >= l) return null;
         if (leftPre > rightPre || leftPost > rightPost) return null;
         var rootVal = pre[leftPre];
         var root = new TreeNode(rootVal);
+        if (rightPre === leftPre) return root;
         var val = pre[leftPre + 1];
         var index = o[val];
         var newRightPre = index - leftPost + 1 + leftPre;
