@@ -8,23 +8,40 @@
 /**
  * @param {TreeNode} root
  */
-var CBTInserter = function(root) {
-
+var CBTInserter = function (root) {
+    this.root = root;
+    this.arr = [];
+    var queue = [root];
+    while (queue.length) {
+        var node = queue.shift();
+        if (!node.left || !node.right) this.arr.push(node);
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+    }
 };
 
 /** 
  * @param {number} v
  * @return {number}
  */
-CBTInserter.prototype.insert = function(v) {
-
+CBTInserter.prototype.insert = function (v) {
+    var node = this.arr[0];
+    var newNode = new TreeNode(v);
+    this.arr.push(newNode);
+    if (node.left) {
+        node.right = newNode;
+        this.arr.shift();
+    } else {
+        node.left = newNode;
+    }
+    return node.val;
 };
 
 /**
  * @return {TreeNode}
  */
-CBTInserter.prototype.get_root = function() {
-
+CBTInserter.prototype.get_root = function () {
+    return this.root;
 };
 
 /**
