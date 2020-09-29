@@ -9,24 +9,26 @@
  * @param {TreeNode} root
  * @return {string}
  */
-var smallestFromLeaf = function(root) {
+var smallestFromLeaf = function (root) {
     var res = '';
-    var dfs = function(node,str){
-        if(!node) return null;
-        str+=node.val;
-        if(node.left === null && node.right === null){
-            var s = str.split('').reverse().join('');
-            if(res){
-                if(s<res){
+    var dfs = function (node, str) {
+        if (!node) return null;
+        var newStr = str + String.fromCharCode(node.val + 97);
+        if (node.left === null && node.right === null) {
+            var arr = newStr.split('');
+            arr.reverse();
+            var s = arr.join('');
+            if (res) {
+                if (res > s) {
                     res = s;
                 }
-            }else{
+            } else {
                 res = s;
             }
         }
-        dfs(node.left,str);
-        dfs(node.right,str);
+        dfs(node.left, newStr);
+        dfs(node.right, newStr);
     };
-    dfs(root,'');
+    dfs(root, '');
     return res;
 };
