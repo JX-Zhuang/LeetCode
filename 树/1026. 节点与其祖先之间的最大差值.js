@@ -15,7 +15,7 @@ var maxAncestorDiff = function (root) {
         if (!node) return null;
         result = Math.max(Math.max(Math.abs(node.val - high), Math.abs(node.val - low)), result);
         high = Math.max(node.val, high);
-        low = Math.max(node.val, low);
+        low = Math.min(node.val, low);
         dfs(node.left, high, low);
         dfs(node.right, high, low);
     };
