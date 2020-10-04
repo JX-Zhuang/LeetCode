@@ -11,7 +11,6 @@
  */
 var lcaDeepestLeaves = function (root) {
     var res, maxDepth = 0;
-    if (!root) return null;
     var dfs = function (node, depth) {
         if (!node) return depth;
         depth++;
@@ -19,8 +18,8 @@ var lcaDeepestLeaves = function (root) {
         var right = dfs(node.right, depth);
         depth = Math.max(left, right);
         if (left === right && depth >= maxDepth) {
-            maxDepth = left;
             res = node;
+            maxDepth = depth;
         }
         return depth;
     };
