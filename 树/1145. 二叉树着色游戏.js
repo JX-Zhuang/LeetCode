@@ -12,6 +12,4 @@
  * @return {boolean}
  */
 var btreeGameWinningMove = function (root, n, x) {
-
-    
 };
