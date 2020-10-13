@@ -9,6 +9,7 @@
  * @param {TreeNode} root
  */
 var FindElements = function (root) {
+    var map = { 0: true };
     root.val = 0;
     var helper = function (node, parent, pos) {
         if (!node) return;
@@ -17,11 +18,12 @@ var FindElements = function (root) {
         } else {
             node.val = 2 * parent + 2;
         }
+        map[node.val] = true;
         helper(node.left, node.val, 'left');
         helper(node.right, node.val, 'right');
     };
     helper(root, -1);
-    this.root = root;
+    this.map = map;
 };
 
 /** 
@@ -29,12 +31,7 @@ var FindElements = function (root) {
  * @return {boolean}
  */
 FindElements.prototype.find = function (target) {
-    var dfs = function (node) {
-        if (!node) return false;
-        if (node.val == target) return true;
-        return dfs(node.left) || dfs(node.right);
-    }
-    return dfs(this.root);
+    return !!this.map[target];
 };
 
 /**
