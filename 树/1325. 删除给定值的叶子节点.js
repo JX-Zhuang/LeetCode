@@ -11,24 +11,10 @@
  * @param {number} target
  * @return {TreeNode}
  */
-var isLeaf = function (node) {
-    return !node.left && !node.right;
-}
 var removeLeafNodes = function (root, target) {
-    var dfs = function (node) {
-        if (!node) return;
-        if (dfs(node.left)) {
-            node.left = null;
-        }
-        if (isLeaf(node) && node.val == target) {
-            return true;
-        }
-        if (dfs(node.right)) {
-            node.right = null;
-            return isLeaf(node) && node.val == target;
-        }
-    };
-    dfs(root);
-    if (isLeaf(root) && root.val == target) return null;
+    if (!root) return null;
+    root.left = removeLeafNodes(root.left, target);
+    root.right = removeLeafNodes(root.right, target);
+    if (!root.left && !root.right && root.val === target) return null;
     return root;
 };
