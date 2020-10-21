@@ -10,5 +10,4 @@
  * @return {number}
  */
 var maxProduct = function(root) {
-    
 };
