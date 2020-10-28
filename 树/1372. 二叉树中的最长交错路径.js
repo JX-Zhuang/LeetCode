@@ -10,5 +10,4 @@
  * @return {number}
  */
 var longestZigZag = function(root) {
-
 };
