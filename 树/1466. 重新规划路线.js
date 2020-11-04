@@ -3,6 +3,28 @@
  * @param {number[][]} connections
  * @return {number}
  */
-var minReorder = function(n, connections) {
-
+var minReorder = function (n, connections) {
+    var arr = [];
+    var visited = new Array(n).fill(false);
+    for (var i = 0; i < n; i++) {
+        arr[i] = [];
+    }
+    for (var index = 0; index < connections.length; index++) {
+        arr[connections[index][0]].push(index);
+        arr[connections[index][1]].push(index);
+    }
+    var ans = 0;
+    var q = [0];
+    while (q.length) {
+        var node = q.shift();
+        for (var index of arr[node]) {
+            if (visited[index]) continue;
+            visited[index] = true;
+            var a = connections[index][0];
+            var b = connections[index][1];
+            ans += a === node;
+            q.push(node === a ? b : a);
+        }
+    }
+    return ans;
 };
