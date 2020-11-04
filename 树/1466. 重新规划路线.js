@@ -9,9 +9,9 @@ var minReorder = function (n, connections) {
     for (var i = 0; i < n; i++) {
         arr[i] = [];
     }
-    for (var index = 0; index < connections.length; index++) {
-        arr[connections[index][0]].push(index);
-        arr[connections[index][1]].push(index);
+    for (var i = 0; i < connections.length; i++) {
+        arr[connections[i][0]].push(i);
+        arr[connections[i][1]].push(i);
     }
     var ans = 0;
     var q = [0];
@@ -23,8 +23,9 @@ var minReorder = function (n, connections) {
             var a = connections[index][0];
             var b = connections[index][1];
             ans += a === node;
-            q.push(node === a ? b : a);
+            q.push(a === node ? b : a);
         }
     }
     return ans;
 };
+//arr [ [ 0, 3 ], [ 0, 1 ], [ 2 ], [ 1, 2 ], [ 3, 4 ], [ 4 ] ]
