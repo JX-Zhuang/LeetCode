@@ -14,14 +14,15 @@ var pathSum = function (root, sum) {
     var ans = [];
     var dfs = function (node, sums, s) {
         if (!node) return;
-        var arr = [...sums, node.val];
+        sums.push(node.val);
         var newSum = s + node.val;
         if (!node.left && !node.right && newSum === sum) {
-            ans.push([...arr]);
+            ans.push([...sums]);
         }
-        dfs(node.left, arr, newSum);
-        dfs(node.right, arr, newSum);
+        dfs(node.left, sums, newSum);
+        dfs(node.right, sums, newSum);
+        sums.pop();
     };
     dfs(root, [], 0);
     return ans;
-}; ¸
+};
