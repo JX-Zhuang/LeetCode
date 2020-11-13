@@ -25,3 +25,12 @@ var inorderSuccessor = function (root, p) {
         }
     }
 };
+
+var inorderSuccessor = function (root, p) {
+    if (!root) return null;
+    if (p.val >= root.val) {
+        return inorderSuccessor(root.right, p);
+    }
+    var left = inorderSuccessor(root.left, p);
+    return left ? left : root;
+};
