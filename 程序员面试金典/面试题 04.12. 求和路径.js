@@ -16,7 +16,7 @@ var pathSum = function (root, sum) {
         if (!node) return 0;
         var count = 0;
         prev += node.val;
-        if (prevMap.hasOwnProperty[prev - sum]) {
+        if (prevMap.hasOwnProperty(prev - sum)) {
             count += prevMap[prev - sum];
         }
         if (prevMap.hasOwnProperty(prev)) {
@@ -29,5 +29,6 @@ var pathSum = function (root, sum) {
         prevMap[prev]--;
         return count;
     }
-    return dfs(root, 0);
+    const a = dfs(root, 0);
+    return a;
 };
