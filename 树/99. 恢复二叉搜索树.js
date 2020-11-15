@@ -34,3 +34,21 @@ var recoverTree = function (root) {
         y.val = temp;
     }
 };
+
+var recoverTree = function(root) {
+    var prev ,t1,t2;
+    var helper = function(node){
+        if(!node) return;
+        helper(node.left);
+        if(prev&&prev.val>node.val){
+            if(!t1) t1 = prev;
+            t2 = node;
+        }
+        prev = node;
+        helper(node.right);
+    };
+    helper(root);
+    var temp = t1.val;
+    t1.val = t2.val;
+    t2.val = temp;
+};
