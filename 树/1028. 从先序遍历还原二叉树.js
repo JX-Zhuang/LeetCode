@@ -11,5 +11,31 @@
  * @return {TreeNode}
  */
 var recoverFromPreorder = function (S) {
-
+    var path = [];
+    var pos = 0;
+    while (pos < S.length) {
+        var level = 0;
+        while (S[pos] === '-') {
+            level++;
+            pos++;
+        }
+        var value = 0;
+        while (!isNaN(S[pos])) {
+            value = value + S[pos];
+            pos++;
+        }
+        var node = new TreeNode(value);
+        if (level === path.length) {
+            if (path.length) {
+                path[path.length - 1].left = node;
+            }
+        } else {
+            while (level != path.length) {
+                path.pop();
+            }
+            path[path.length - 1].right = node;
+        }
+        path.push(node);
+    }
+    return path[0];
 };
