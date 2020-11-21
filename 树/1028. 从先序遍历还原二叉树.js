@@ -21,8 +21,7 @@ var recoverFromPreorder = function (S) {
         }
         var value = 0;
         while (!isNaN(S[pos])) {
-            value = value + S[pos];
-            pos++;
+            value += S[pos++];
         }
         var node = new TreeNode(value);
         if (level === path.length) {
@@ -30,7 +29,7 @@ var recoverFromPreorder = function (S) {
                 path[path.length - 1].left = node;
             }
         } else {
-            while (level != path.length) {
+            while (path.length !== level) {
                 path.pop();
             }
             path[path.length - 1].right = node;
