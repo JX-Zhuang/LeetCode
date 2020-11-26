@@ -17,5 +17,5 @@ var findNumberIn2DArray = function (matrix, target) {
             return true;
         }
     }
-    return true;
+    return false;
 };
