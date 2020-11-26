@@ -19,7 +19,7 @@ var balanceBST = function (root) {
     };
     dfs(root);
     var build = function (l, r) {
-        var mid = Math.floor((l + r) / 2);
+        var mid = (l + r) >> 1;
         var node = new TreeNode(arr[mid]);
         if (l <= mid - 1) {
             node.left = build(l, mid - 1);
@@ -28,6 +28,6 @@ var balanceBST = function (root) {
             node.right = build(mid + 1, r);
         }
         return node;
-    }
+    };
     return build(0, arr.length - 1);
 };
