@@ -3,9 +3,5 @@
  * @return {number[]}
  */
 var printNumbers = function(n) {
-    var max='' ;
-    for(var i = 0;i<n;i++){
-        max+='9';
-    }
-    return new Array(Number(max)).fill(1).map((i,index)=>index+1);
+    return new Array(Math.pow(10,n)-1).fill(1).map((i,index)=>index+1);
 };
