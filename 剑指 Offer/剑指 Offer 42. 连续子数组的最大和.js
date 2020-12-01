@@ -6,7 +6,7 @@ var maxSubArray = function (nums) {
     var max = nums[0], sum = 0;
     for (var n of nums) {
         if (sum < 0) {
-            sum = 0;
+            sum = n;
         } else {
             sum += n;
         }
