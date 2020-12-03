@@ -4,9 +4,11 @@
  * @return {number[]}
  */
 var twoSum = function (nums, target) {
-    var o = {};
-    for (var n of nums) {
-        if (o[n]) return [n, target - n];
-        o[target - n] = true;
+    var i = 0, j = nums.length - 1;
+    while (i < j) {
+        var sum = nums[i] + nums[j];
+        if (sum === target) return [nums[i], nums[j]];
+        if (sum > target) j--;
+        else i++;
     }
 };
