@@ -13,3 +13,10 @@ var lastRemaining = function (n, m) {
     }
     return arr[0];
 };
+var lastRemaining = function (n, m) {
+    var ans = 0;
+    for(var i = 2;i<=n;i++){
+        ans = (ans+m)%i;
+    }
+    return ans;
+};
