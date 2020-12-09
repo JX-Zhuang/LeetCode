@@ -14,3 +14,12 @@ var twoSum = function (numbers, target) {
         o[item] = i + 1;
     }
 };
+
+var twoSum = function (numbers, target) {
+    var left = 0, right = numbers.length - 1;
+    while (left < right) {
+        var sum = numbers[left] + numbers[right];
+        if (sum === target) return [left + 1, right + 1];
+        sum < target ? left++ : right--;
+    }
+};
