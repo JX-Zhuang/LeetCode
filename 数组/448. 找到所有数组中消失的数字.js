@@ -10,9 +10,9 @@ var findDisappearedNumbers = function (nums) {
             nums[index] *= -1;
         }
     }
-    for (var i = 1; i <= nums.length; i++) {
-        if (nums[i - 1] > 0) {
-            arr.push(i);
+    for (var i = 0; i < nums.length; i++) {
+        if (nums[i] > 0) {
+            arr.push(i + 1);
         }
     }
     return arr;
