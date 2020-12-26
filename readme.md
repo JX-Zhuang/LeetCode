@@ -7,7 +7,7 @@
 #### 双指针
 #### 二分搜索
 #### 滑动窗口
-```
+``` javascript
 function foo(s,t){
     var need = {},window = {};
     for(var item of s){
