@@ -19,20 +19,12 @@ var helper = function(s, k, i) {
 		numsNoLessThanK = 0;
 	while (right < s.length) {
 		var c = s[right++];
-		if (window[c]++ === 0) {
-			count++;
-		}
-		if (window[c] === k) {
-			numsNoLessThanK++;
-		}
+		if (window[c]++ === 0) count++;
+		if (window[c] === k) numsNoLessThanK++;
 		while (count > i) {
 			var d = s[left++];
-			if (window[d]-- === k) {
-				numsNoLessThanK--;
-			}
-			if (window[d] === 0) {
-				count--;
-			}
+			if (window[d]-- === k) numsNoLessThanK--;
+			if (window[d] === 0) count--;
 		}
 		if (count === numsNoLessThanK) res = Math.max(res, right - left);
 	}
