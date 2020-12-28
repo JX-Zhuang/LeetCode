@@ -17,6 +17,7 @@ var helper = function(s, k, i) {
 		right = 0;
 	var count = 0,
 		numsNoLessThanK = 0;
+	var res = 0;
 	while (right < s.length) {
 		var c = s[right++];
 		if (window[c]++ === 0) count++;
