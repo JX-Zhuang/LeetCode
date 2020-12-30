@@ -13,17 +13,18 @@ var subarraysWithKDistinct = function(A, K) {
 		if (!window.hasOwnProperty(item)) {
 			window[item] = 0;
 		}
-        window[item]++;
-		if (Object.keys(window).length === K) {
-			res++;
+		window[item]++;
+		while (Object.keys(window).length > K) {
 			var n = A[left++];
 			window[n]--;
 			if (window[n] === 0) {
 				delete window[n];
 			}
-		}
-    }
-    console.log(res)
+        }
+		if (Object.keys(window).length === K) res++;
+	}
+	console.log(res);
 	return res;
 };
 subarraysWithKDistinct([ 1, 2, 1, 2, 3 ], 2);
+subarraysWithKDistinct([ 1, 2, 1, 3, 4 ], 3);
