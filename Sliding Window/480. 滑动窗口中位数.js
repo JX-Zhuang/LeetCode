@@ -3,15 +3,15 @@
  * @param {number} k
  * @return {number[]}
  */
-var remove = function(arr,value){
-    var n = arr.length;
-    for (var i = 0; i < n; i++) {
-        if (arr[i] >= value) {
-            arr[i] = arr[i+1];
-        } 
-    } 
-    arr.length--;
-}
+var remove = function(arr, value) {
+	var n = arr.length;
+	for (var i = 0; i < n; i++) {
+		if (arr[i] >= value) {
+			arr[i] = arr[i + 1];
+		}
+	}
+	arr.length--;
+};
 var insert = function(arr, value) {
 	for (var i = arr.length - 1; i >= 0; i--) {
 		if (arr[i] > value) {
@@ -26,12 +26,16 @@ class A {
 	arr = [];
 	window = {}; // index->value
 	start = 0;
+	constructor(arr) {
+        for(var index in arr) this.window[index] = arr[index];
+        this.arr = arr.sort((a,b)=>a-b);
+	}
 	getArr() {
 		return this.arr;
 	}
 	removeStart() {
 		var value = this.window[this.start];
-        remove(this.arr,value);
+		remove(this.arr, value);
 		this.start++;
 	}
 	add(index, value) {
@@ -42,17 +46,14 @@ class A {
 var median = function(arr, left, right) {
 	var index = (right + left) >> 1;
 	if (arr.length % 2 === 0) {
-		return (arr[index] + arr[index-1]) / 2;
+		return (arr[index] + arr[index - 1]) / 2;
 	} else {
 		return arr[index];
 	}
 };
 var medianSlidingWindow = function(nums, k) {
 	var ans = [];
-	var a = new A();
-	for (var i = 0; i < k; i++) {
-		a.add(i, nums[i]);
-	}
+    var a = new A(nums.slice(0, k));
 	ans.push(median(a.getArr(), 0, k));
 	for (var i = k; i < nums.length; i++) {
 		a.removeStart();
@@ -62,5 +63,6 @@ var medianSlidingWindow = function(nums, k) {
 	console.log(ans);
 	return ans;
 };
+
 medianSlidingWindow([ 1, 3, -1, -3, 5, 3, 6, 7 ], 3);
-medianSlidingWindow([ 1, 3, 4, 2 ], 2);
+// medianSlidingWindow([ 1, 3, 4, 2 ], 2);
