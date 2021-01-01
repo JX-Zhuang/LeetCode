@@ -3,66 +3,48 @@
  * @param {number} k
  * @return {number[]}
  */
-var remove = function(arr, value) {
-	var n = arr.length;
-	for (var i = 0; i < n; i++) {
-		if (arr[i] >= value) {
-			arr[i] = arr[i + 1];
-		}
-	}
-	arr.length--;
-};
-var insert = function(arr, value) {
-	for (var i = arr.length - 1; i >= 0; i--) {
-		if (arr[i] > value) {
-			arr[i + 1] = arr[i];
+var find = function(arr, value) {
+	var left = 0,
+        right = arr.length;
+	while (left < right) {
+		var mid = (right + left) >> 1;
+		if (arr[mid] > value) {
+			right = mid - 1;
+		} else if (arr[mid] < value) {
+			left = mid + 1;
 		} else {
-			break;
+			return mid;
 		}
-	}
-	arr[i + 1] = value;
+    }
+	return left;
 };
-class A {
-	arr = [];
-	window = {}; // index->value
-	start = 0;
-	constructor(arr) {
-        for(var index in arr) this.window[index] = arr[index];
-        this.arr = arr.sort((a,b)=>a-b);
-	}
-	getArr() {
-		return this.arr;
-	}
-	removeStart() {
-		var value = this.window[this.start];
-		remove(this.arr, value);
-		this.start++;
-	}
-	add(index, value) {
-		this.window[index] = value;
-		insert(this.arr, value);
-	}
-}
-var median = function(arr, left, right) {
-	var index = (right + left) >> 1;
-	if (arr.length % 2 === 0) {
-		return (arr[index] + arr[index - 1]) / 2;
-	} else {
-		return arr[index];
-	}
+var medianFun = function(k) {
+	var isEven = k % 2 === 0;
+	var half = k >> 1;
+	return (arr) => {
+		if (isEven) {
+			return (arr[half] + arr[half - 1]) / 2;
+		} else {
+			return arr[half];
+		}
+	};
 };
 var medianSlidingWindow = function(nums, k) {
 	var ans = [];
-    var a = new A(nums.slice(0, k));
-	ans.push(median(a.getArr(), 0, k));
+	var median = medianFun(k);
+    // 有序数组arr
+	var arr = nums.slice(0, k).sort((a, b) => a - b);
+	ans.push(median(arr, 0, k));
 	for (var i = k; i < nums.length; i++) {
-		a.removeStart();
-		a.add(i, nums[i]);
-		ans.push(median(a.getArr(), 0, k));
+        //删除第一个元素
+        var removeIndex = find(arr, nums[i-k]);
+        arr.splice(removeIndex, 1);
+        //把当前元素加入到arr里
+        var value = nums[i];
+        var addIndex = find(arr, value);
+        if(arr[addIndex]<value) addIndex++;
+		arr.splice(addIndex, 0, value);
+		ans.push(median(arr, 0, k));
 	}
-	console.log(ans);
 	return ans;
 };
-
-medianSlidingWindow([ 1, 3, -1, -3, 5, 3, 6, 7 ], 3);
-// medianSlidingWindow([ 1, 3, 4, 2 ], 2);
