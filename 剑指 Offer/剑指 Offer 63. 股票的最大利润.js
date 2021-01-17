@@ -1,6 +1,7 @@
 /**
  * @param {number[]} prices
  * @return {number}
+ * 与 121. 买卖股票的最佳时机 一样
  */
 var maxProfit = function (prices) {
     var n = prices.length;
