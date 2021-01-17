@@ -1,6 +1,7 @@
 /**
  * @param {number} n
  * @return {number}
+ * 与 343. 整数拆分 一样
  */
 var cuttingRope = function (n) {
     var dp = new Array(n + 1).fill(0);
