@@ -35,10 +35,10 @@ var isMatch = function (s, p) {
                     }
                 } else {
                     if (j >= 2) {
-                        dp[i][j] |= dp[i][j - 2];
+                        dp[i][j] = dp[i][j] || dp[i][j - 2];
                     }
                     if (i >= 1 && j >= 2 && (s[i - 1] === p[j - 2] || p[j - 2] === '.')) {
-                        dp[i][j] = f[i - 1][j];
+                        dp[i][j] = dp[i][j] || dp[i - 1][j];
                     }
                 }
             }
