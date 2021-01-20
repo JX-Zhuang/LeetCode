@@ -2,6 +2,7 @@
  * @param {string} s
  * @param {string} p
  * @return {boolean}
+ * 与 10. 正则表达式匹配 一样
  * 
  * 
  *  p的最后一个
