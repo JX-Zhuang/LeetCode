@@ -11,10 +11,10 @@ var canPartition = function (nums) {
 	dp[0][0] = true;
 	for (var i = 1; i < nums.length; i++) {
 		for (var j = 0; j <= half; j++) {
-			if (j < nums[i]) {
+			if (j < nums[i - 1]) {
 				dp[i][j] = dp[i - 1][j];
 			} else {
-				dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
+				dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
 			}
 		}
 	}
@@ -28,8 +28,8 @@ var canPartition = function (nums) {
 	var dp = new Array(half + 1).fill(false);
 	dp[0] = true;
 	for (var i = 1; i < nums.length; i++) {
-		for (var j = half; j >= nums[i]; j--) {
-			dp[j] = dp[j] || dp[j - nums[i]];
+		for (var j = half; j >= nums[i - 1]; j--) {
+			dp[j] = dp[j] || dp[j - nums[i - 1]];
 		}
 	}
 	return dp[half];
