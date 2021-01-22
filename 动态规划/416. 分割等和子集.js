@@ -20,3 +20,17 @@ var canPartition = function (nums) {
 	}
 	return dp[n - 1][half];
 };
+
+var canPartition = function (nums) {
+	var sum = nums.reduce((a, b) => a + b, 0);
+	if (sum % 2 === 1) return false;
+	var half = sum / 2;
+	var dp = new Array(half + 1).fill(false);
+	dp[0] = true;
+	for (var i = 1; i < nums.length; i++) {
+		for (var j = half; j >= nums[i]; j--) {
+			dp[j] = dp[j] || dp[j - nums[i]];
+		}
+	}
+	return dp[half];
+};
