@@ -26,9 +26,9 @@ var change = function (amount, coins) {
     var n = coins.length;
     var dp = new Array(amount + 1).fill(0);
     dp[0] = 1;
-    for (var i = 1; i <= n; i++) {
-        for (var j = coins[i - 1]; j <= amount; j++) {
-            dp[j] = dp[j] + dp[j - coins[i - 1]];
+    for (var i = 1; i < n; i++) {
+        for (var j = coins[i]; j <= amount; j++) {
+            dp[j] = dp[j] + dp[j - coins[i]];
         }
     }
     return dp[amount];
