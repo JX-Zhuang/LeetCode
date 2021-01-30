@@ -26,3 +26,17 @@ var countSubstrings = function(s) {
 	}
 	return dp[n - 1];
 };
+var countSubstrings = function(s) {
+	var n = s.length;
+	var dp = Array.from(new Array(n + 1)).map((i) => new Array(n + 1).fill(false));
+	var ans = 0;
+	for (var i = 0; i < n; i++) {
+		for (var j = 0; j <= i; j++) {
+			if (s[i] === s[j] && (i - j < 2 || dp[j + 1][i - 1])) {
+				dp[j][i] = true;
+				ans++;
+			}
+		}
+	}
+	return ans;
+};
