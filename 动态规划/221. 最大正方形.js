@@ -13,8 +13,6 @@ var maximalSquare = function(matrix) {
 				if (i === 0 || j === 0) {
 					dp[i][j] = 1;
 				} else {
-					if (i === 2 && j === 3) {
-					}
 					dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1;
 				}
 				max = Math.max(dp[i][j], max);
