@@ -20,7 +20,7 @@ var oneEditAway = function(first, second) {
 		}
 		return true;
 	} else {
-        if (m === 0 || n === 0) return true;
+		if (m === 0 || n === 0) return true;
 		var maxStr, minStr;
 		if (m > n) {
 			maxStr = first;
@@ -43,4 +43,24 @@ var oneEditAway = function(first, second) {
 		}
 		return true;
 	}
+};
+/**
+ * @param {string} first
+ * @param {string} second
+ * @return {boolean}
+ */
+var oneEditAway = function(first, second) {
+	var m = first.length;
+	var n = second.length;
+	if (first === second) return true;
+	if (Math.abs(m - n) > 1) return false;
+	var i = 0;
+	while (i < m && i < n && first[i] === second[i]) i++;
+	var f = m - 1,
+		s = n - 1;
+	while (f >= 0 && s >= 0 && first[f] === second[s]) {
+		f--;
+		s--;
+	}
+	return f - i < 1 && s - i < 1;
 };
