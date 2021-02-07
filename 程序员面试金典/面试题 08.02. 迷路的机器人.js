@@ -30,3 +30,32 @@ var pathWithObstacles = function(obstacleGrid) {
 	}
 	return dp[m - 1][n - 1];
 };
+
+/**
+ * @param {number[][]} obstacleGrid
+ * @return {number[][]}
+ */
+var pathWithObstacles = function(obstacleGrid) {
+	if (obstacleGrid.length === 0) return [];
+	var m = obstacleGrid.length,
+		n = obstacleGrid[0].length;
+	var ans = [];
+	var backtrack = function(x, y) {
+		if (obstacleGrid[x][y] === 1) return false;
+		if (x === m - 1 && y === n - 1) {
+			ans.push([ x, y ]);
+			return true;
+		}
+		ans.push([ x, y ]);
+		if (x < m - 1) {
+			if (backtrack(x + 1, y)) return true;
+		}
+		if (y < n - 1) {
+			if (backtrack(x, y + 1)) return true;
+		}
+		ans.pop();
+		obstacleGrid[x][y] = 1; // 剪枝
+	};
+	backtrack(0, 0);
+	return ans;
+};
