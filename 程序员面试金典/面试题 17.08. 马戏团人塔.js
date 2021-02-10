@@ -23,3 +23,28 @@ var bestSeqAtIndex = function(height, weight) {
 	}
 	return ans;
 };
+var bestSeqAtIndex = function(height, weight) {
+	var persons = height.map((height, i) => ({
+		height,
+		weight: weight[i]
+	}));
+	persons.sort((a, b) => (a.height === b.height ? b.weight - a.weight : a.height - b.height));
+	var dp = new Array(persons.length).fill(0);
+	var ans = 0;
+	for (var person of persons) {
+		var weight = person.weight;
+		var left = 0,
+			right = ans;
+		while (left < right) {
+			var mid = parseInt((left + right) / 2);
+			if (dp[mid] < weight) {
+				left = mid + 1;
+			} else {
+				right = mid;
+			}
+		}
+		dp[left] = weight;
+		if (right === ans) ans++;
+	}
+	return ans;
+};
