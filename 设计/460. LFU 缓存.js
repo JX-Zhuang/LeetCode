@@ -1,6 +1,9 @@
 /**
  * @param {number} capacity
  */
+class DoubleList{
+	
+}
 var LFUCache = function(capacity) {
 	this.cnt = {};
 	this.cache = [];
