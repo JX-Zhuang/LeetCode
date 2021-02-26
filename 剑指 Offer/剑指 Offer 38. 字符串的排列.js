@@ -10,10 +10,12 @@ var permutation = function(s) {
 			return;
 		}
 		for (var i = 0; i < s.length; i++) {
-			if (indexs.includes(i)) continue;
-			backtrack(track + s[i], indexs.concat(i));
+			if (indexs[i]) continue;
+			indexs[i] = true;
+			backtrack(track + s[i], indexs);
+			indexs[i] = false;
 		}
 	};
-	backtrack('', []);
+	backtrack('', {});
 	return [ ...new Set(ans) ];
 };
