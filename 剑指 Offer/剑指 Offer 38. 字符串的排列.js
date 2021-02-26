@@ -4,24 +4,16 @@
  */
 var permutation = function(s) {
 	var ans = [];
-	var indexMap = {};
-	for (var index in s) {
-		indexMap[index] = s[index];
-	}
-	var backtrack = function(track) {
+	var backtrack = function(track, indexs) {
 		if (track.length === s.length) {
-			var a = '';
-			for (var index of track) {
-				a += indexMap[index];
-			}
-			ans.push(a);
+			ans.push(track);
 			return;
 		}
 		for (var i = 0; i < s.length; i++) {
-			if (track.includes(i)) continue;
-			backtrack(track + i);
+			if (indexs.includes(i)) continue;
+			backtrack(track + s[i], indexs.concat(i));
 		}
 	};
-	backtrack('');
+	backtrack('', []);
 	return [ ...new Set(ans) ];
 };
