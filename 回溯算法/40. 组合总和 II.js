@@ -1,24 +1,21 @@
-/**
- * @param {number[]} candidates
- * @param {number} target
- * @return {number[][]}
- */
-var combinationSum2 = function(candidates, target) {
+var combinationSum2 = function (candidates, target) {
 	var ans = [];
 	candidates.sort((a, b) => a - b);
-	var backtrack = function(str, sum, start) {
+	var backtrack = function (sum, start, arr) {
+		if (sum > target) return;
 		if (sum === target) {
-			if (!ans.includes(str)) {
-				ans.push(str);
-			}
+			ans.push(arr.slice(0));
 			return;
 		}
 		for (var i = start; i < candidates.length; i++) {
 			var item = candidates[i];
-			if (item > target) break;
-			backtrack(str + '.' + item, sum + candidates[i], i + 1);
+			var newSum = sum + candidates[i];
+			if (start < i && item === candidates[i - 1]) continue
+			arr.push(item);
+			backtrack(newSum, i + 1, arr);
+			arr.pop();
 		}
 	};
-	backtrack('', 0, 0);
-	return ans.map((item) => item.slice(1).split('.'));
+	backtrack(0, 0, []);
+	return ans;
 };
