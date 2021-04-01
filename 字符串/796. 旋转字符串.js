@@ -13,3 +13,6 @@ var rotateString = function (A, B) {
         if (oldA === A) return false;
     }
 };
+var rotateString = function (A, B) {
+    return A.length === B.length && (A + A).includes(B);
+}
