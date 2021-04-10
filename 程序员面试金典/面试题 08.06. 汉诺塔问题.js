@@ -15,3 +15,15 @@ var hanota = function (A, B, C) {
     }
     hanota(A, B, C);
 };
+var hanota = function (A, B, C) {
+    var move = function (n, A, B, C) {
+        if (n === 1) {
+            C.push(A.pop());
+        } else {
+            move(n - 1, A, C, B);
+            C.push(A.pop());
+            move(n - 1, B, A, C);
+        }
+    };
+    move(A.length, A, B, C);
+};
