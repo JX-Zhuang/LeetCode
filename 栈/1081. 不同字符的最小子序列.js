@@ -2,7 +2,7 @@
  * @param {string} s
  * @return {string}
  */
-var removeDuplicateLetters = function (s) {
+var smallestSubsequence = function (s) {
     var ans = [];
     var num = {};
     var visited = {};
