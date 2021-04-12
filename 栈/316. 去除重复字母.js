@@ -3,5 +3,6 @@
  * @return {string}
  */
 var removeDuplicateLetters = function(s) {
-
+    var ans = '';
+    return ans;
 };
