@@ -4,19 +4,15 @@
  * @return {string}
  */
 var removeDuplicates = function (s, k) {
-    var stack = [];
-    var lastS = '', num = 0;
+    var counts = [];
     for (var i = 0; i < s.length; i++) {
-        stack.push(s[i]);
-        if (s[i] !== lastS) num = 0;
-        num++;
-        if (num === k) {
-            while (num !== 0) {
-                stack.pop();
-                num--;
-            }
+        if (i === 0 || s[i - 1] !== s[i]) {
+            counts.push(1);
+        } else if (++counts[counts.length - 1] === k) {
+            counts.pop();
+            s = s.slice(0, i - k + 1) + s.slice(i + 1);
+            i = i - k;
         }
-        lastS = stack[stack.length - 1];
     }
-    return stack.join('');
+    return s;
 };
