@@ -3,5 +3,5 @@
  * @return {string}
  */
 var reverseParentheses = function(s) {
-
+    return ''
 };
