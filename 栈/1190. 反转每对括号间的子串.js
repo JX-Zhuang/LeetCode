@@ -2,6 +2,7 @@
  * @param {string} s
  * @return {string}
  */
+
 var reverseParentheses = function (s) {
     var stack = [];
     for (var c of s) {
