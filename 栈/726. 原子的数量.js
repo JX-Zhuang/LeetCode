@@ -3,12 +3,11 @@
  * @return {string}
  */
 var isNumber = function (c) {
-    if (c === undefined) return false;
-    return c.match(/[0-9]/);
+    return /[0-9]/.test(c);
 };
 var isLowerCase = function (c) {
     if (c === undefined) return false;
-    return c.match(/[a-z]/);
+    return /[a-z]/.test(c);
 };
 var updateObj = function (obj, key, count) {
     if (!obj.hasOwnProperty(key)) {
