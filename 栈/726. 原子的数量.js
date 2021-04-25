@@ -4,13 +4,11 @@
  */
 var isNumber = function (c) {
     if (c === undefined) return false;
-    return c.match(/[2-9]/);
+    return c.match(/[0-9]/);
 };
 var isLowerCase = function (c) {
+    if (c === undefined) return false;
     return c.match(/[a-z]/);
-};
-var isUpperCase = function (c) {
-    return c.match(/[A-Z]/);
 };
 var updateObj = function (obj, key, count) {
     if (!obj.hasOwnProperty(key)) {
@@ -25,6 +23,7 @@ var countOfAtoms = function (formula) {
         var n = formula.length;
         while (i < n && formula[i] !== ')') {
             if (formula[i] === '(') {
+                i++;
                 const count = recursion(formula);
                 for (var key in count) {
                     updateObj(obj, key, count[key]);
@@ -35,30 +34,25 @@ var countOfAtoms = function (formula) {
                 while (isLowerCase(formula[i])) {
                     item += formula[i++];
                 }
-                var count = 1;
+                var count = '';
                 while (isNumber(formula[i])) {
-                    i++;
-                    count++;
+                    count += formula[i++];
                 }
-                updateObj(obj, item, count);
+                updateObj(obj, item, count || 1);
             }
         }
-        var count = 1;
+        while (formula[i] === ')') i++;
+        var count = '';
         while (isNumber(formula[i])) {
-            i++;
-            count++;
+            count += formula[i++];
         }
         for (var key in obj) {
-            obj[key] *= count;
+            obj[key] *= count || 1;
         }
         return obj;
     };
     var obj = recursion(formula);
     var arr = Object.keys(obj);
     arr.sort();
-    var ans = '';
-    for (var key of arr) {
-        ans += obj[key] === 1 ? key : (key + obj[key]);
-    }
-    return ans;
+    return arr.sort().map(key => obj[key] === 1 ? key : (key + obj[key])).join('');
 };
