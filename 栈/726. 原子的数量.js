@@ -3,6 +3,7 @@
  * @return {string}
  */
 var isNumber = function (c) {
+    if (c === undefined) return false;
     return c.match(/[2-9]/);
 };
 var isLowerCase = function (c) {
@@ -18,7 +19,6 @@ var updateObj = function (obj, key, count) {
     obj[key] += Number(count);
 };
 var countOfAtoms = function (formula) {
-    var obj = {};
     var i = 0;
     var recursion = function (formula) {
         var obj = {};
@@ -52,5 +52,13 @@ var countOfAtoms = function (formula) {
             obj[key] *= count;
         }
         return obj;
+    };
+    var obj = recursion(formula);
+    var arr = Object.keys(obj);
+    arr.sort();
+    var ans = '';
+    for (var key of arr) {
+        ans += obj[key] === 1 ? key : (key + obj[key]);
     }
+    return ans;
 };
