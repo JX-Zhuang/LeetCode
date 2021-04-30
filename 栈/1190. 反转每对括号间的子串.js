@@ -17,6 +17,7 @@ var reverseParentheses = function (s) {
     }
     return stack.join('');
 };
+
 // "(ed(et(oc))el)"
 // 1.stack = [(,e,d,(,e,t,(,o,c];
 // 2.temp = [c,o]
