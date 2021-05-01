@@ -3,19 +3,22 @@
  * @param {number} K
  * @return {number}
  */
+var arrLast = function (arr) {
+    return arr[arr.length - 1];
+}
 var shortestSubarray = function (A, K) {
-    var sums = [0];
-    for (var i of A) {
-        var prev = sums[sums.length - 1];
-        sums.push(prev + i);
+    var sums = new Array(A.length + 1).fill(0);
+    for (var i = 0; i < A.length; i++) {
+        sums[i + 1] = sums[i] + A[i];
     }
     var result = A.length + 1;
-    for (var i = 0; i < A.length; i++) {
-        for (var j = i + 1; j < A.length + 1; j++) {
-            if (sums[j] - sums[i] >= K) {
-                result = Math.min(result, j - i);
-            }
-        }
+    var queue = [];
+    for (var i = 0; i < sums.length; i++) {
+        while (queue.length && sums[i] <= sums[arrLast(queue)])
+            queue.pop();
+        while (queue.length && sums[i] - sums[queue[0]] >= K)
+            result = Math.min(result, i - queue.shift());
+        queue.push(i);
     }
     return result > A.length ? -1 : result;
 };
