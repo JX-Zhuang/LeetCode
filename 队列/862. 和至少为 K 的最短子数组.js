@@ -4,15 +4,17 @@
  * @return {number}
  */
 var shortestSubarray = function (A, K) {
-    var queue = [];
+    var sums = [0];
+    for (var i of A) {
+        var prev = sums[sums.length - 1];
+        sums.push(prev + i);
+    }
     var result = A.length + 1;
-    var sum = 0;
-    for (var num of A) {
-        queue.push(num);
-        sum += num;
-        while (sum <= K) {
-            if (sum === K) result = Math.min(result, queue.length);
-            sum -= queue.shift();
+    for (var i = 0; i < A.length; i++) {
+        for (var j = i + 1; j < A.length + 1; j++) {
+            if (sums[j] - sums[i] >= K) {
+                result = Math.min(result, j - i);
+            }
         }
     }
     return result > A.length ? -1 : result;
