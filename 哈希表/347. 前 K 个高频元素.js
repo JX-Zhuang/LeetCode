@@ -11,19 +11,20 @@ var topKFrequent = function (nums, k) {
         }
         map[n]++;
     }
-    var o = {};
+    var bucket = [];
     for (var key in map) {
-        const count = map[key];
-        if (!o.hasOwnProperty(count)) {
-            o[count] = [];
+        var count = map[key];
+        if (!bucket[count]) {
+            bucket[count] = [];
         }
-        o[count].push(key);
+        bucket[count].push(key);
     }
-    const counts = Object.keys(o).sort((a, b) => b - a);
-    let result = [];
-    for (const item of counts) {
-        result = result.concat(o[item]);
-        if (result.length >= k) return result;
+    var result = [];
+    for (var i = bucket.length - 1; i >= 0; i--) {
+        if (bucket[i]) {
+            result.push(...bucket[i]);
+        }
+        if (result.length >= k) break;
     }
     return result;
 };
