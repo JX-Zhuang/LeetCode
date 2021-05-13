@@ -7,19 +7,13 @@ var firstUniqChar = function (s) {
     for (var i = 0; i < s.length; i++) {
         var item = s[i];
         if (item in m) {
-            m[item].count++;
+            m[item]++;
         } else {
-            m[item] = {
-                count: 1,
-                index: i
-            };
+            m[item] = 1;
         }
     }
-    var min = s.length;
-    for (var key in m) {
-        if (m[key].count === 1) {
-            if (m[key].index < min) min = m[key].index;
-        }
+    for (var i in s) {
+        if (m[s[i]] === 1) return i;
     }
-    return min === s.length ? -1 : min;
+    return -1;
 };
