@@ -6,25 +6,15 @@
  * @return {number}
  */
 var fourSumCount = function (nums1, nums2, nums3, nums4) {
-    var result = 0;
-    nums1.sort((a, b) => a - b);
-    nums2.sort((a, b) => a - b);
-    nums3.sort((a, b) => a - b);
-    nums4.sort((a, b) => a - b);
-    for (var i = 0; i < nums1.length; i++) {
-        if (nums1[i] + nums2[0] + nums3[0] + nums4[0] > 0) return result;
-        for (var j = 0; j < nums2.length; j++) {
-            if (nums1[i] + nums2[j] + nums3[0] + nums4[0] > 0) break;
-            for (var h = 0; h < nums3.length; h++) {
-                if (nums1[i] + nums2[j] + nums3[h] + nums4[0] > 0) break;
-                for (var k = 0; k < nums4.length; k++) {
-                    var sum = nums1[i] + nums2[j] + nums3[h] + nums4[k];
-                    if (sum === 0) {
-                        result++;
-                    } else if (sum > 0) break;
-                }
+    var ans = 0;
+    var m = new Map();
+    nums1.forEach(n1 => nums2.forEach(n2 => m.set(n1 + n2, (m.get(n1 + n2) || 0) + 1)));
+    for (const n3 of nums3) {
+        for (const n4 of nums4) {
+            if (m.get(-n3 - n4)) {
+                ans += m.get(-n3 - n4);
             }
         }
     }
-    return result;
+    return ans;
 };
