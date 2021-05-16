@@ -4,15 +4,15 @@
  * @return {number}
  */
 var minSubArrayLen = function (target, nums) {
-    var ans = nums.length + 1;
-    for (var i = 0; i < nums.length; i++) {
-        var sum = 0;
-        for (var j = i; j < nums.length; j++) {
-            sum += nums[j];
-            if (sum >= target) {
-                ans = Math.min(ans, j - i + 1);
-            }
+    var left = 0;
+    var ans = 0;
+    var sum = 0;
+    for (var right = 0; right < nums.length; right++) {
+        sum += nums[right];
+        while (sum >= target) {
+            ans = ans === 0 ? right - left + 1 : Math.min(ans, right - left + 1);
+            sum -= nums[left++];
         }
     }
-    return ans === nums.length + 1 ? 0 : ans;
+    return ans;
 };
