@@ -12,7 +12,8 @@ var longestPalindrome = function (s) {
     var l = 0;
     for (var k in m) {
         if (m[k] % 2) {
-            l = Math.max(l, m[k])
+            ans += m[k] - 1;
+            l = 1;
         } else {
             ans += m[k];
         }
