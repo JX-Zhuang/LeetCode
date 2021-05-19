@@ -5,7 +5,6 @@
  */
 var findSubstring = function (s, words) {
     var wordL = words[0].length;
-    var strL = words[0].length * words.length;
     var m = {};
     for (var word of words) {
         if (!m.hasOwnProperty(word)) {
@@ -14,24 +13,26 @@ var findSubstring = function (s, words) {
         m[word]++;
     }
     var ans = [];
-    for (var i = 0; i <= s.length - strL; i++) {
-        var o = { ...m };
-        var l = 0;
-        var j = i;
-        while (l < strL) {
-            var ch = '';
-            for (var h = 0; h < wordL; h++) {
-                ch += s[h + j];
+    for (var i = 0; i < wordL; i++) {
+        var tmp = {};
+        var left = i, right = i, count = 0;
+        while (right + wordL <= s.length) {
+            var str = s.substr(right, wordL);
+            if (!tmp.hasOwnProperty(str)) {
+                tmp[str] = 0;
             }
-            if (o[ch] > 0) {
-                o[ch]--;
-                l += wordL;
-            } else {
-                break;
+            tmp[str]++;
+            right += wordL;
+            count++;
+            if (!m[str]) m[str] = 0;
+            while (tmp[str] > m[str]) {
+                var strT = s.substr(left, wordL);
+                count--;
+                tmp[strT]--;
+                left += wordL;
             }
-            j += wordL;
+            if (count === words.length) ans.push(left);
         }
-        if (l === strL) ans.push(i);
     }
     return ans;
 };
