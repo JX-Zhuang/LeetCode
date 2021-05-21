@@ -3,6 +3,6 @@
  * @param {number} denominator
  * @return {string}
  */
-var fractionToDecimal = function(numerator, denominator) {
-
+var fractionToDecimal = function (numerator, denominator) {
+    var ans = String(numerator / denominator);
 };
