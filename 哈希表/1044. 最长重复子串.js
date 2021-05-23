@@ -3,22 +3,14 @@
  * @return {string}
  */
 var longestDupSubstring = function (s) {
-    var m = {};
     var ans = '';
-    for (var i = 0; i < s.length; i++) {
-        var item = s[i];
-        m = { ...m };
-        for (var key in m) {
-            var newK = key + item;
-            m[newK] = m[key];
+    for (var i = Math.ceil(s.length / 2); i >= 2; i--) {
+        var m = new Set();
+        for (var j = 0; j < s.length; j++) {
+            var str = s.substr(j, i);
+            if (m.has(str)) return str;
+            m.add(str);
         }
-        if (!m.hasOwnProperty(item)) {
-            m[item] = 0;
-        }
-        m[item]++;
-    }
-    for (var key in m) {
-        if (m[key] > 1 && key.length > ans.length) ans = key;
     }
     return ans;
 };
