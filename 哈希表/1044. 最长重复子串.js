@@ -14,3 +14,4 @@ var longestDupSubstring = function (s) {
     }
     return ans;
 };
+
