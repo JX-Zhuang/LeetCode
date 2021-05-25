@@ -2,16 +2,22 @@
  * @param {string} s
  * @return {string}
  */
-var longestDupSubstring = function (s) {
-    var ans = '';
-    for (var i = Math.ceil(s.length / 2); i >= 2; i--) {
-        var m = new Set();
-        for (var j = 0; j < s.length; j++) {
-            var str = s.substr(j, i);
-            if (m.has(str)) return str;
-            m.add(str);
-        }
+var find = function (l, s) {
+    var m = new Set();
+    for (var j = 0; j < s.length; j++) {
+        var str = s.substr(j, l);
+        if (m.has(str)) return str;
+        m.add(str);
     }
-    return ans;
+    return '';
+}
+var longestDupSubstring = function (s) {
+    var length = s.length;
+    var left = 1, right = length;
+    while (left !== right) {
+        var l = left + Math.floor((right - left) / 2);
+        if (find(l, s)) left = l + 1;
+        else right = l;
+    }
+    return find(left - 1, s);
 };
-
