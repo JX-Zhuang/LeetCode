@@ -2,7 +2,8 @@
  * Initialize your data structure here.
  */
 var MyHashSet = function () {
-    this.set = [];
+    this.base = 769;
+    this.set = new Array(this.base).fill(0).map(() => new Array());
 };
 
 /** 
@@ -10,7 +11,11 @@ var MyHashSet = function () {
  * @return {void}
  */
 MyHashSet.prototype.add = function (key) {
-    this.set[key] = key;
+    var h = this.hash(key);
+    for (var element of this.set[h]) {
+        if (element === key) return;
+    }
+    this.set[h].push(key);
 };
 
 /** 
@@ -18,7 +23,13 @@ MyHashSet.prototype.add = function (key) {
  * @return {void}
  */
 MyHashSet.prototype.remove = function (key) {
-    this.set[key] = null;
+    var h = this.hash(key);
+    for (var index in this.set[h]) {
+        if (this.set[h][index] === key) {
+            this.set[h].splice(index, 1);
+            return;
+        }
+    }
 };
 
 /**
@@ -27,9 +38,15 @@ MyHashSet.prototype.remove = function (key) {
  * @return {boolean}
  */
 MyHashSet.prototype.contains = function (key) {
-    return this.set[key] !== null && this.set[key] !== undefined;
+    var h = this.hash(key);
+    for (var element of this.set[h]) {
+        if (element === key) return true;
+    }
+    return false;
 };
-
+MyHashSet.prototype.hash = function (key) {
+    return key % this.base;
+}
 /**
  * Your MyHashSet object will be instantiated and called as such:
  * var obj = new MyHashSet()
