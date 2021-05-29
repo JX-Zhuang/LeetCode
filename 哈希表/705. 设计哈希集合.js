@@ -1,24 +1,24 @@
 /**
  * Initialize your data structure here.
  */
- var MyHashSet = function() {
-
+var MyHashSet = function () {
+    this.set = [];
 };
 
 /** 
  * @param {number} key
  * @return {void}
  */
-MyHashSet.prototype.add = function(key) {
-
+MyHashSet.prototype.add = function (key) {
+    this.set[key] = key;
 };
 
 /** 
  * @param {number} key
  * @return {void}
  */
-MyHashSet.prototype.remove = function(key) {
-
+MyHashSet.prototype.remove = function (key) {
+    this.set[key] = null;
 };
 
 /**
@@ -26,8 +26,8 @@ MyHashSet.prototype.remove = function(key) {
  * @param {number} key
  * @return {boolean}
  */
-MyHashSet.prototype.contains = function(key) {
-
+MyHashSet.prototype.contains = function (key) {
+    return this.set[key] !== null && this.set[key] !== undefined;
 };
 
 /**
