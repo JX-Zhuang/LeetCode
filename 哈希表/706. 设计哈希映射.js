@@ -2,7 +2,8 @@
  * Initialize your data structure here.
  */
 var MyHashMap = function () {
-    this.map = [];
+    this.base = 769;
+    this.map = new Array(this.base).fill(0).map(() => new Array());
 };
 
 /**
@@ -12,7 +13,14 @@ var MyHashMap = function () {
  * @return {void}
  */
 MyHashMap.prototype.put = function (key, value) {
-    this.map[key] = value;
+    var h = this.hash(key);
+    for (var item of this.map[h]) {
+        if (item[0] === key) {
+            item[1] = value;
+            return;
+        }
+    }
+    this.map[h].push([key, value]);
 };
 
 /**
@@ -21,8 +29,11 @@ MyHashMap.prototype.put = function (key, value) {
  * @return {number}
  */
 MyHashMap.prototype.get = function (key) {
-    if (this.map[key] === undefined) return -1;
-    return this.map[key];
+    var h = this.hash(key);
+    for (var item of this.map[h]) {
+        if (item[0] === key) return item[1];
+    }
+    return -1;
 };
 
 /**
@@ -31,9 +42,17 @@ MyHashMap.prototype.get = function (key) {
  * @return {void}
  */
 MyHashMap.prototype.remove = function (key) {
-    this.map[key] = undefined;
+    var h = this.hash(key);
+    for (var index in this.map[h]) {
+        if (key === this.map[h][index][0]) {
+            this.map[h].splice(index, 1);
+            return;
+        }
+    }
 };
-
+MyHashMap.prototype.hash = function (key) {
+    return key % this.base;
+}
 /**
  * Your MyHashMap object will be instantiated and called as such:
  * var obj = new MyHashMap()
