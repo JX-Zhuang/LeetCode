@@ -17,14 +17,25 @@ var isAnswer = function (word, puzzle) {
     }
     return true;
 }
-
+var getStr = function (puzzle) {
+    var str = puzzle[0];
+    str += [...new Set(puzzle.slice(1).split(""))].sort().join('');
+    return str;
+}
 var findNumOfValidWords = function (words, puzzles) {
     var ans = [];
+    var m = {};
     for (var p of puzzles) {
         var i = 0;
+        var str = getStr(p);
+        if (m.hasOwnProperty(str)) {
+            ans.push(m[str]);
+            continue;
+        }
         for (var w of words) {
             if (isAnswer(w, p)) i++;
         }
+        m[str] = i;
         ans.push(i);
     }
     return ans;
