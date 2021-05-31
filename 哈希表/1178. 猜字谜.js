@@ -17,6 +17,7 @@ var isAnswer = function (word, puzzle) {
     }
     return true;
 }
+
 var getStr = function (puzzle) {
     var str = puzzle[0];
     str += [...new Set(puzzle.slice(1).split(""))].sort().join('');
