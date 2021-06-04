@@ -3,62 +3,33 @@
  * @param {string[]} puzzles
  * @return {number[]}
  */
-//  单词 word 中包含谜面 puzzle 的第一个字母。
-//  单词 word 中的每一个字母都可以在谜面 puzzle 中找到。
-var isAnswer = function (word, puzzle, m) {
-    var first = puzzle[0];
-    if (!word.includes(first)) return false;
-    for (var ch of word) {
-        if (!m[ch]) return false;
-    }
-    return true;
-}
-
-var getStr = function (puzzle) {
-    var str = puzzle[0];
-    str += puzzle.slice(1).split("").sort().join('');
-    return str;
-}
 var findNumOfValidWords = function (words, puzzles) {
-    var ans = [];
-    var m = {};
-    var mapPuzzle = {};
-    var mapWord = {};
-    for(var word of words){
-        const m = {};
-        for(var w of word){
-            m[w] = true;
-        }
-        mapWord[word] = m;
+    var map = {};
+    for (var word of words) {
+        var bits = getBits(word);
+        map[bits] = map[bits] || 0;
+        map[bits]++;
     }
-    for (var puzzle of puzzles) {
-        const m = {};
-        for (var ch of puzzle) {
-            m[ch] = true;
-        }
-        mapPuzzle[puzzle] = m;
-    }
-    for (var p of puzzles) {
-        var i = 0;
-        var str = getStr(p);
-        if (m.hasOwnProperty(str)) {
-            ans.push(m[str]);
-            continue;
-        }
-        for (var w of words) {
-            const first = p[0];
-            let flag = true;
-            if (!mapWord[w][first]) continue;
-            for (var ch of w) {
-                if (!mapPuzzle[p][ch]) {
-                    flag = false;
-                    break;
-                }
+    var res = new Array(puzzles.length).fill(0);
+    for (var i = 0; i < puzzles.length; i++) {
+        var puzzleBits = getBits(puzzles[i]);
+        var first = getBits(puzzles[i][0]);
+        var n = puzzleBits;
+        while (n > 0) {
+            if ((n & first) != 0 && map[n] > 0) {
+                res[i] += map[n];
             }
-            flag && i++;
+            n = (n - 1) & puzzleBits;
         }
-        m[str] = i;
-        ans.push(i);
     }
-    return ans;
+    return res;
 };
+var getBits = function (word) {
+    var res = 0;
+    for (var i = 0; i < word.length; i++) {
+        var n = word[i].charCodeAt() - 97;
+        var status = 1 << n;
+        res = res | status;
+    }
+    return res;
+}
