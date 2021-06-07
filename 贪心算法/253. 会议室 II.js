@@ -16,3 +16,19 @@ var minMeetingRooms = function (intervals) {
     }
     return endList.length;
 };
+var minMeetingRooms = function (intervals) {
+    var map = new Map();
+    for (var interval of intervals) {
+        var start = interval[0], end = interval[1];
+        map.set(start, (map.get(start) || 0) + 1);
+        map.set(end, (map.get(end) || 0) - 1);
+    }
+    var keys = [...map.keys()].sort((a, b) => a - b);
+    var res = 0, sum = 0;
+    for (var key of keys) {
+        var value = map.get(key);
+        sum += value;
+        res = Math.max(res, sum);
+    }
+    return res;
+};
