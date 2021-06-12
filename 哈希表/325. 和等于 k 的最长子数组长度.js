@@ -5,16 +5,17 @@
  */
 var maxSubArrayLen = function (nums, k) {
     var ans = 0;
-    var m = {
-        0: -1
-    };
-    var sum = 0;
+    var m = new Map();
+    m.set(0, -1);
+    var sum = 0, j;
     for (var i = 0; i < nums.length; i++) {
         sum += nums[i];
-        if (!m.hasOwnProperty(sum)) m[sum] = i;
-        var j = sum - k;
-        if (m.hasOwnProperty(j)) {
-            ans = Math.max(ans, i - m[j]);
+        if (!m.has(sum)) {
+            m.set(sum, i);
+        }
+        j = sum - k;
+        if (m.has(j)) {
+            ans = Math.max(ans, i - m.get(j));
         }
     }
     return ans;
