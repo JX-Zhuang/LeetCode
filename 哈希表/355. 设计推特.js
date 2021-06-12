@@ -2,9 +2,17 @@
  * Initialize your data structure here.
  */
 var Twitter = function () {
-
+    this.users = new Map();
+    this.messages = [];
 };
-
+Twitter.prototype.createUser = function (userId) {
+    if (!this.users.has(userId)) {
+        this.users.set(userId, {
+            follows: new Set(),
+        });
+        this.users.get(userId).follows.add(userId);
+    }
+}
 /**
  * Compose a new tweet. 
  * @param {number} userId 
@@ -12,7 +20,11 @@ var Twitter = function () {
  * @return {void}
  */
 Twitter.prototype.postTweet = function (userId, tweetId) {
-
+    this.createUser(userId);
+    this.messages.push({
+        userId,
+        tweetId
+    });
 };
 
 /**
@@ -21,7 +33,15 @@ Twitter.prototype.postTweet = function (userId, tweetId) {
  * @return {number[]}
  */
 Twitter.prototype.getNewsFeed = function (userId) {
-
+    var messages = [];
+    this.createUser(userId);
+    var user = this.users.get(userId);
+    for (var i = this.messages.length; i--; i < this.messages.length) {
+        var message = this.messages[i];
+        if (user.follows.has(message.userId)) messages.push(message.tweetId);
+        if (messages.length === 10) break;
+    }
+    return messages;
 };
 
 /**
@@ -31,7 +51,8 @@ Twitter.prototype.getNewsFeed = function (userId) {
  * @return {void}
  */
 Twitter.prototype.follow = function (followerId, followeeId) {
-
+    this.createUser(followerId);
+    this.users.get(followerId).follows.add(followeeId);
 };
 
 /**
@@ -41,7 +62,7 @@ Twitter.prototype.follow = function (followerId, followeeId) {
  * @return {void}
  */
 Twitter.prototype.unfollow = function (followerId, followeeId) {
-
+    this.users.get(followerId).follows.delete(followeeId);
 };
 
 /**
