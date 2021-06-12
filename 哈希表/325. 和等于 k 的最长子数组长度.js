@@ -6,14 +6,15 @@
 var maxSubArrayLen = function (nums, k) {
     var ans = 0;
     var m = {
+        0: -1
     };
     var sum = 0;
     for (var i = 0; i < nums.length; i++) {
         sum += nums[i];
-        m[sum] = i;
-        if (sum === k) ans = i;
-        if (m.hasOwnProperty(-k) && nums[i] !== -k) {
-            ans = Math.max(ans, i - m[-k] + 1);
+        if (!m.hasOwnProperty(sum)) m[sum] = i;
+        var j = sum - k;
+        if (m.hasOwnProperty(j)) {
+            ans = Math.max(ans, i - m[j]);
         }
     }
     return ans;
