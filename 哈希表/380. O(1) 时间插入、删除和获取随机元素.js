@@ -2,7 +2,8 @@
  * Initialize your data structure here.
  */
 var RandomizedSet = function () {
-    this.set = new Set();
+    this.map = new Map();
+    this.values = [];
 };
 
 /**
@@ -11,8 +12,9 @@ var RandomizedSet = function () {
  * @return {boolean}
  */
 RandomizedSet.prototype.insert = function (val) {
-    if (this.set.has(val)) return false;
-    this.set.add(val);
+    if (this.map.has(val)) return false;
+    this.map.set(val, this.values.length);
+    this.values.push(val);
     return true;
 };
 
@@ -22,8 +24,14 @@ RandomizedSet.prototype.insert = function (val) {
  * @return {boolean}
  */
 RandomizedSet.prototype.remove = function (val) {
-    if (!this.set.has(val)) return false;
-    this.set.delete(val);
+    if (!this.map.has(val)) return false;
+    var index = this.map.get(val);
+    var last = this.values.pop();
+    if (index !== this.map.size - 1) {
+        this.values[index] = last;
+        this.map.set(last, index);
+    }
+    this.map.delete(val);
     return true;
 };
 
@@ -32,15 +40,8 @@ RandomizedSet.prototype.remove = function (val) {
  * @return {number}
  */
 RandomizedSet.prototype.getRandom = function () {
-    var length = this.set.size;
-    var index = Math.floor(Math.random() * length);
-    var i = 0;
-    for (var item of this.set) {
-        if (i === index) {
-            return item;
-        }
-        i++;
-    }
+    var index = Math.floor(Math.random() * this.values.length);
+    return this.values[index];
 };
 
 /**
