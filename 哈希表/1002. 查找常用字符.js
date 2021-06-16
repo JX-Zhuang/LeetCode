@@ -24,3 +24,18 @@ var commonChars = function (words) {
     }
     return ans;
 };
+/**
+ * @param {string[]} words
+ * @return {string[]}
+ */
+var commonChars = function (words) {
+    var ans = [];
+    var str = words[0];
+    for (var s of str) {
+        if (words.every(w => w.includes(s))) {
+            words = words.map(w => w.replace(s, ''));
+            ans.push(s);
+        }
+    }
+    return ans;
+};
