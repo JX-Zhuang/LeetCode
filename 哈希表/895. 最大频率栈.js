@@ -1,6 +1,8 @@
+
 var FreqStack = function () {
-    this.stack = [];
-    this.map = new Map();
+    this.freq = new Map();
+    this.group = new Map();
+    this.maxFreq = 0;
 };
 
 /** 
@@ -8,31 +10,22 @@ var FreqStack = function () {
  * @return {void}
  */
 FreqStack.prototype.push = function (val) {
-    this.stack.push(val);
-    this.map.set(val, (this.map.get(val) || 0) + 1);
+    var freq = (this.freq.get(val) || 0) + 1;
+    this.freq.set(val, freq);
+    if (freq > this.maxFreq) this.maxFreq = freq;
+    var stack = this.group.get(freq) || [];
+    stack.push(val);
+    this.group.set(freq, stack);
 };
 
 /**
  * @return {number}
  */
 FreqStack.prototype.pop = function () {
-    var max = 0;
-    for (var [val, count] of this.map) {
-        max = Math.max(max, count);
-    }
-    var set = new Set();
-    for (var [val, count] of this.map) {
-        if (count === max) set.add(val);
-    }
-    for (var i = this.stack.length - 1; i >= 0; i--) {
-        var val = this.stack[i];
-        if (set.has(val)) {
-            this.stack.splice(i, 1);
-            this.map.set(val, this.map.get(val) - 1);
-            if (this.map.get(val) === 0) this.map.delete(val);
-            return val;
-        }
-    }
+    var val = this.group.get(this.maxFreq).pop();
+    this.freq.set(val, this.freq.get(val) - 1);
+    if (this.group.get(this.maxFreq).length === 0) this.maxFreq--;
+    return val;
 };
 
 /**
