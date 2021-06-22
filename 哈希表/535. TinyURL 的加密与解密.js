@@ -17,7 +17,6 @@ var encode = function(longUrl) {
 var decode = function(shortUrl) {
     
 };
-
 /**
  * Your functions will be called as such:
  * decode(encode(url));
