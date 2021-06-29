@@ -3,14 +3,16 @@
  * @return {number}
  */
 var firstMissingPositive = function (nums) {
-    var set = new Set();
-    var max = 1;
-    for (var n of nums) {
-        set.add(n);
-        max = Math.max(max, n);
+    var n = nums.length;
+    for (var i = 0; i < n; i++) {
+        if (nums[i] <= 0) nums[i] = n + 1;
     }
-    for (var i = 1; i <= max; i++) {
-        if (!set.has(i)) return i;
+    for (var i = 0; i < n; i++) {
+        var item = Math.abs(nums[i]);
+        if (item <= n) nums[item - 1] = -Math.abs(nums[item - 1]);
     }
-    return max + 1;
+    for (var i = 0; i < n; i++) {
+        if (nums[i] > 0) return i + 1;
+    }
+    return n + 1;
 };
