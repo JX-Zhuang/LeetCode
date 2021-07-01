@@ -3,39 +3,16 @@
  * @return {string}
  */
 var intToRoman = function (num) {
-    var str = String(num);
-    var l = str.length;
-    var ans = '';
-    var m = {
-        1: 'I',
-        5: 'V',
-        10: 'X',
-        50: 'L',
-        100: 'C',
-        500: 'D',
-        1000: 'M',
-        4: 'IV',
-        9: 'IX',
-        40: 'XL',
-        90: 'XC',
-        400: 'CD',
-        900: 'CM'
-    };
-    for (var i = 0; i < l; i++) {
-        var item = str[i];
-        var num = Math.pow(10, l - i - 1);
-        var result = String(item * num);
-        if (m[result]) {
-            ans += m[result];
+    let nums = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1],
+        char = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+    let ans = '';
+    while (num > 0) {
+        if (num >= nums[0]) {
+            ans += char[0];
+            num -= nums[0];
         } else {
-            var n = Number(item);
-            if (n > 5) {
-                ans += m[5 * num];
-                n -= 5;
-            }
-            for (var j = 0; j < n; j++) {
-                ans += m[num];
-            }
+            nums.shift();
+            char.shift();
         }
     }
     return ans;
