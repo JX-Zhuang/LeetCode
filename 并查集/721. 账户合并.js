@@ -3,47 +3,51 @@
  * @return {string[][]}
  */
 var accountsMerge = function (accounts) {
-    var obj = {};
-    for (var i = 0; i < accounts.length; i++) {
-        var item = accounts[i];
-        var name = item[0] + '_' + i;
-        var mails = item.splice(1);
-        var sameName = {};
-        for (var key in obj) {
-            if (key.includes(item[0])) {
-                sameName[key] = obj[key];
+    const mailToIndex = new Map(), mailToName = new Map();
+    let n = 0
+    for (const account of accounts) {
+        const name = account[0];
+        for (let j = 1; j < account.length; j++) {
+            const mail = account[j];
+            if (!mailToIndex.has(mail)) {
+                mailToIndex.set(mail, ++n);
+                mailToName.set(mail, name);
             }
-        }
-        if (Object.keys(sameName).length === 0) {
-            obj[name] = new Set(mails);
-            continue;
-        }
-        let findNames = [];
-        for (var key in sameName) {
-            for (var mail of mails) {
-                if (sameName[key].has(mail)) {
-                    findNames.push(key);
-                    break;
-                }
-            }
-        }
-        if (findNames.length === 0) {
-            obj[name] = new Set(mails);
-        } else {
-            const findName = findNames[0];
-            let set = new Set([...mails]);
-            for (let i = 1; i < findNames.length; i++) {
-                const name = findNames[i];
-                set = new Set([...set, ...sameName[name]]);
-                delete obj[name];
-            }
-            obj[findName] = new Set([...obj[findName], ...set]);
         }
     }
-    var ans = [];
-    for (var name in obj) {
-        var arr = [name.substring(0, name.indexOf('_'))].concat([...obj[name]].sort());
-        ans.push(arr);
+    const uf = new UnionFind(n);
+    for (const account of accounts) {
+        const parentIndex = mailToIndex.get(account[1]);
+        for (let i = 2; i < account.length; i++) {
+            const nextIndex = mailToIndex.get(account[i]);
+            uf.union(parentIndex, nextIndex);
+        }
+    }
+    const indexToMails = new Map();
+    for (const [mail, index] of mailToIndex) {
+        const parentIndex = uf.find(index);
+        const mails = indexToMails.get(parentIndex) || [];
+        mails.push(mail);
+        indexToMails.set(parentIndex, mails);
+    }
+    const ans = [];
+    for (const mails of indexToMails.values()) {
+        const name = mailToName.get(mails[0]);
+        mails.sort();
+        ans.push([name, ...mails]);
     }
     return ans;
 };
+class UnionFind {
+    constructor(n) {
+        this.parent = new Array(n).fill(0).map((v, index) => index);
+    }
+    find(index) {
+        //路径压缩
+        if (index !== this.parent[index]) this.parent[index] = this.find(this.parent[index]);
+        return this.parent[index];
+    }
+    union(index1, index2) {
+        this.parent[this.find(index1)] = this.find(index2);
+    }
+}
