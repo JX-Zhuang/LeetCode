@@ -3,18 +3,31 @@
  * @return {number}
  */
 var minSwapsCouples = function (row) {
-    var ans = 0;
-    for (var i = 0; i < row.length - 1; i = i + 2) {
-        if (row[i] === (row[i + 1] ^ 1)) continue;
-        for (var j = i + 1; j < row.length; j++) {
-            if (row[i] === (row[j] ^ 1)) {
-                var temp = row[i + 1];
-                row[i + 1] = row[j];
-                row[j] = temp;
-            }
-        }
-        console.log(row)
-        ans++;
+    var l = row.length, n = Math.floor(l / 2);
+    var uf = new UnionFind(n);
+    for (var i = 0; i < l; i += 2) {
+        uf.union(Math.floor(row[i] / 2), Math.floor(row[i + 1] / 2));
     }
-    return ans;
+    return n - uf.getCount();
 };
+class UnionFind {
+    constructor(n) {
+        this.count = n;
+        this.parent = new Array(n).fill(0).map((_, index) => index);
+    }
+    find(n) {
+        if (this.parent[n] !== n) {
+            this.parent[n] = this.find(this.parent[n]);
+        }
+        return this.parent[n];
+    }
+    union(n1, n2) {
+        const r1 = this.find(n1), r2 = this.find(n2);
+        if (r1 == r2) return;
+        this.parent[r1] = r2;
+        this.count--;
+    }
+    getCount() {
+        return this.count;
+    }
+}
