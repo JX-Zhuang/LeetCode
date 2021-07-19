@@ -5,28 +5,26 @@
  */
 var makeConnected = function (n, connections) {
     if (connections.length < n - 1) return -1;
-    var ans = 0;
-    var edges = new Map();
-    var visited = [];
-    var dfs = function (index) {
-        visited[index] = 1;
-        if (edges.get(index)) {
-            for (const e of edges.get(index)) {
-                if (!visited[e]) {
-                    dfs(e);
-                }
-            }
-        }
-    };
-    for (const [x, y] of connections) {
-        edges.get(x) ? edges.get(x).push(y) : edges.set(x, [y]);
-        edges.get(y) ? edges.get(y).push(x) : edges.set(y, [x]);
+    const uf = new UnionFind(n);
+    for (const [a, b] of connections) {
+        uf.union(a, b);
     }
-    for (let i = 0; i < n; i++) {
-        if (!visited[i]) {
-            dfs(i);
-            ans++;
-        }
-    }
-    return ans - 1;
+    return uf.count - 1;
 };
+class UnionFind {
+    constructor(n) {
+        this.parent = new Array(n).fill(0).map((_, index) => index);
+        this.count = n;
+    }
+    find(x) {
+        if (x === this.parent[x]) return x;
+        this.parent[x] = this.find(this.parent[x]);
+        return this.parent[x];
+    }
+    union(a, b) {
+        let x = this.find(a), y = this.find(b);
+        if (x === y) return;
+        this.parent[x] = y;
+        this.count--;
+    }
+}
