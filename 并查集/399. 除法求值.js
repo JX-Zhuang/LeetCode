@@ -5,7 +5,10 @@
  * @return {number[]}
  */
 var calcEquation = function (equations, values, queries) {
-
+    var l = equations.length;
+    var uf = new UnionFind(2 * l);
+    var m = new Map();
+    
 };
 class UnionFind {
     constructor(n) {
