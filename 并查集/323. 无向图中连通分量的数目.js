@@ -4,10 +4,15 @@
  * @return {number}
  */
 var countComponents = function (n, edges) {
-
+    const uf = new UnionFind(n);
+    for (const edge of edges) {
+        uf.union(edge[0], edge[1]);
+    }
+    return uf.getCount();
 };
 class UnionFind {
     constructor(n) {
+        this.count = n;
         this.parents = Array.from(new Array(n).fill(0), (_, index) => index);
     }
     find(a) {
@@ -20,6 +25,10 @@ class UnionFind {
     union(a, b) {
         const x = this.find(a), y = this.find(b);
         if (x === y) return;
-        this.parents[x] = y; z
+        this.count--;
+        this.parents[x] = y;
+    }
+    getCount(){
+        return this.count;
     }
 }
