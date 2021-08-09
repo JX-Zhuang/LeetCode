@@ -34,8 +34,12 @@ var trulyMostPopular = function (names, synonyms) {
     for (let i = 0; i < names.length; i++) {
         const { name: name1, count: count1 } = names[i];
         const id1 = nameMapId[name1];
-        if (visited[id1]) continue;
         let count = count1, name = name1;
+        if(id1 === undefined){
+            result.push(`${name}(${count})`);
+            continue;
+        }
+        if (visited[id1]) continue;
         visited[id1] = true;
         for (let j = 0; j < names.length; j++) {
             const { name: name2, count: count2 } = names[j];
@@ -46,6 +50,9 @@ var trulyMostPopular = function (names, synonyms) {
                 name = name.localeCompare(name2) === -1 ? name : name2;
                 visited[id2] = true;
             }
+        }
+        if(name1 === 'Avmzs'){
+            console.log(name)
         }
         result.push(`${name}(${count})`);
     }
