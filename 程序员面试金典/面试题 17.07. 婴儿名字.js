@@ -1,20 +1,18 @@
-/**
- * @param {string[]} names
- * @param {string[]} synonyms
- * @return {string[]}
- */
 var trulyMostPopular = function (names, synonyms) {
     let id = 0;
-    const nameMapId = {};
+    const nameMapId = {}, idMapName = {};
     synonyms = synonyms.map((item) => {
         const names = item.split(',');
-        return [names[0].slice(1), names[1].slice(0, names[1].length - 1)]
-    });
+        const name1 = names[0].slice(1), name2 = names[1].slice(0, names[1].length - 1);
+        return [name1, name2].sort().reverse();
+    }).sort((a, b) => a[1].localeCompare(b[1]) * -1);
     for (const [name1, name2] of synonyms) {
         if (!nameMapId.hasOwnProperty(name1)) {
+            idMapName[id] = name1;
             nameMapId[name1] = id++;
         }
         if (!nameMapId.hasOwnProperty(name2)) {
+            idMapName[id] = name2;
             nameMapId[name2] = id++;
         }
     }
@@ -29,34 +27,17 @@ var trulyMostPopular = function (names, synonyms) {
             count: Number(arr[1].replace(')', ''))
         }
     });
-    const visited = {};
-    const result = [];
-    for (let i = 0; i < names.length; i++) {
-        const { name: name1, count: count1 } = names[i];
-        const id1 = nameMapId[name1];
-        let count = count1, name = name1;
-        if(id1 === undefined){
-            result.push(`${name}(${count})`);
-            continue;
+    const nameMapCount = {};
+    for (const { name, count } of names) {
+        const id1 = nameMapId[name];
+        const id2 = uf.find(id1);
+        const name2 = idMapName[id2] || name;
+        if (!nameMapCount.hasOwnProperty(name2)) {
+            nameMapCount[name2] = 0;
         }
-        if (visited[id1]) continue;
-        visited[id1] = true;
-        for (let j = 0; j < names.length; j++) {
-            const { name: name2, count: count2 } = names[j];
-            const id2 = nameMapId[name2];
-            if (visited[id2]) continue;
-            if (uf.isConnected(id1, id2)) {
-                count += count2;
-                name = name.localeCompare(name2) === -1 ? name : name2;
-                visited[id2] = true;
-            }
-        }
-        if(name1 === 'Avmzs'){
-            console.log(name)
-        }
-        result.push(`${name}(${count})`);
+        nameMapCount[name2] += count;
     }
-    return result;
+    return Object.keys(nameMapCount).map((name) => `${name}(${nameMapCount[name]})`);
 };
 class UnionFind {
     constructor(n) {
