@@ -2,6 +2,7 @@
  * @param {number[][]} grid
  * @return {number}
  */
+
 var numEnclaves = function (grid) {
     var l1 = grid.length, l2 = grid[0].length;
     var dfs = function (i, j) {
