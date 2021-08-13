@@ -3,7 +3,16 @@
  * @return {boolean}
  */
 var isBipartite = function (graph) {
-
+    var l = graph.length;
+    var uf = new UnionFind(l);
+    for (var i = 0; i < l; i++) {
+        var item = graph[i];
+        for (var j = 0; j < item.length; j++) {
+            if (uf.isConnected(i, item[j])) return false;
+            uf.union(item[0], item[j])
+        }
+    }
+    return true;
 };
 class UnionFind {
     constructor(n) {
@@ -25,5 +34,8 @@ class UnionFind {
     }
     getCount() {
         return this.count;
+    }
+    isConnected(a, b) {
+        return this.find(a) === this.find(b);
     }
 }
