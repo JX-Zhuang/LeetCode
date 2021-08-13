@@ -1,6 +1,7 @@
 /**
  * @param {number[][]} graph
  * @return {boolean}
+ * 与 785 一样
  */
 var isBipartite = function (graph) {
     var l = graph.length;
