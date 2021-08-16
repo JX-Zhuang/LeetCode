@@ -20,7 +20,6 @@ var calcEquation = function (equations, values, queries) {
         var idA = m[a], idB = m[b];
         uf.union(idA, idB, values[i]);
     }
-    console.log(uf)
     var result = [];
     for (var i = 0; i < queries.length; i++) {
         var [a, b] = queries[i];
@@ -48,8 +47,7 @@ class UnionFind {
     union(a, b, weight) {
         const x = this.find(a), y = this.find(b);
         if (x === y) return false;
-        const weightA = this.weights[a], weightB = this.weights[b];
-        this.weights[x] = weightA * weight / weightB;
+        this.weights[x] = this.weights[b] * weight / this.weights[a];
         this.parents[x] = y;
         return true;
     }
