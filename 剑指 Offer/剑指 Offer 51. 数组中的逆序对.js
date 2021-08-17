@@ -26,8 +26,7 @@ var mergeSort = function (arr) {
             else if (copy[i] > copy[j]) {
                 count += mid - i + 1;
                 arr[k] = copy[j++];
-            }
-            else arr[k] = copy[i++];
+            } else arr[k] = copy[i++];
         }
     }
     sort(arr, 0, arr.length - 1);
