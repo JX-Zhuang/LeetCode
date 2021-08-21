@@ -9,9 +9,9 @@ var spiralOrder = function (matrix) {
     var cols = matrix[0].length;
     var visited = Array.from(new Array(rows), () => new Array(cols).fill(false));
     var printNumber = function (x, y) {
-        if (visited[x][y]) return;
-        var lX = rows - 2 * x,
-            lY = cols - 2 * y;
+        if (x < 0 || y < 0 || x >= rows || y >= cols || visited[x][y]) return;
+        var lX = rows - x,
+            lY = cols - y;
         for (var i = y; i <= lY - 1; i++) {
             if (visited[x][i]) continue;
             result.push(matrix[x][i]);
