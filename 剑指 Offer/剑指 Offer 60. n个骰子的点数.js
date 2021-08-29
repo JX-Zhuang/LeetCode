@@ -8,7 +8,7 @@ var dicesProbability = function (n) {
         var arr = new Array(5 * i + 1).fill(0);
         for (var j = 0; j < result.length; j++) {
             for (var k = 0; k < 6; k++) {
-                arr[j + k] += result[j] / 6;
+                arr[k + j] += result[j] / 6;
             }
         }
         result = arr;
