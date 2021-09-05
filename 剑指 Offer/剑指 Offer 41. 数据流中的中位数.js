@@ -68,6 +68,9 @@ class MinPQ {
         this.pq[++this.n] = value;
         this.swim(this.n);
     }
+    size() {
+        return this.n;
+    }
     exch(a, b) {
         const temp = this.pq[a];
         this.pq[a] = this.pq[b];
@@ -102,13 +105,21 @@ var MedianFinder = function () {
  * @return {void}
  */
 MedianFinder.prototype.addNum = function (num) {
-
+    if (this.minPQ.size() !== this.maxPQ.size()) {
+        this.minPQ.insert(num);
+        this.maxPQ.insert(this.minPQ.delMin());
+    } else {
+        this.maxPQ.insert(num);
+        this.minPQ.insert(this.maxPQ.delMax());
+    }
 };
 
 /**
  * @return {number}
  */
 MedianFinder.prototype.findMedian = function () {
+    return this.minPQ.size() === this.maxPQ.size() ?
+        (this.minPQ.min() + this.maxPQ.max()) / 2 : this.minPQ.min();
 };
 
 /**
