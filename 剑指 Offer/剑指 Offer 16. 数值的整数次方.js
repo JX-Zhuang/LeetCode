@@ -4,12 +4,16 @@
  * @return {number}
  */
 var myPow = function (x, n) {
-    var helper = function (x, n) {
-        if (n === 0) return 1;
-        if (n === 1) return x;
-        var m = Math.floor(n / 2);
-        var r = helper(x, m);
-        return  r * r * (n % 2 ? x : 1);
+    if (n < 0) {
+        x = 1 / x;
+        n = -n;
     }
-    return n < 0 ? 1 / helper(x, -1 * n) : helper(x, n);
+    var result = 1;
+    for (var i = n; i > 0; i = Math.floor(i / 2)) {
+        if (i % 2) {
+            result *= x;
+        }
+        x *= x;
+    }
+    return result;
 };
