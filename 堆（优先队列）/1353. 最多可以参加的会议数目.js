@@ -24,7 +24,7 @@ class PriorityQueue {
     }
     swim(n) {
         while (n > 1 && this.comparator(n >> 1, n)) {
-            this.exch(n >> 1, n);
+            this.exch(n, n >> 1);
             n = n >> 1;
         }
     }
@@ -39,7 +39,6 @@ class PriorityQueue {
     }
     poll() {
         const result = this.queue[1];
-        // this.exch(1, this.n--);
         this.queue[1] = this.queue[this.n--];
         this.sink(1);
         return result;
