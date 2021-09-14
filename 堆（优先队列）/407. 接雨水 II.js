@@ -14,7 +14,7 @@ class PriorityQueue {
         return this.n;
     }
     swim(n) {
-        while (n < 1 && this.comparator(n >> 1, n)) {
+        while (n > 1 && this.comparator(n >> 1, n)) {
             this.exch(n >> 1, n);
             n = n >> 1;
         }
@@ -59,13 +59,14 @@ var trapRainWater = function (heightMap) {
         }
     }
     var dirs = [-1, 0, 1, 0, -1];
+    var poll, x, y, height;
     while (pq.size()) {
-        var poll = pq.poll();
+        poll = pq.poll();
         for (var i = 0; i < 4; i++) {
-            var x = poll[0] + dirs[i];
-            var y = poll[1] + dirs[i + 1];
+            x = poll[0] + dirs[i];
+            y = poll[1] + dirs[i + 1];
             if (x >= 0 && x < m && y >= 0 && y < n && !visited[x][y]) {
-                var height = heightMap[x][y];
+                height = heightMap[x][y];
                 if (poll[2] > height) {
                     result += poll[2] - height;
                 }
