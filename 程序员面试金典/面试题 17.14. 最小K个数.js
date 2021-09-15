@@ -12,9 +12,7 @@ class PriorityQueue {
         return this.pq[a] < this.pq[b];
     }
     exch(a, b) {
-        const temp = this.pq[a];
-        this.pq[a] = this.pq[b];
-        this.pq[b] = temp;
+        [this.pq[a], this.pq[b]] = [this.pq[b], this.pq[a]];
     }
     insert(value) {
         this.pq[++this.n] = value;
