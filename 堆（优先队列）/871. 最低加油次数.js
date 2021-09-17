@@ -6,12 +6,12 @@
  */
 var minRefuelStops = function (target, startFuel, stations) {
     var n = stations.length;
-    var dp = new Array(n).fill(0);
+    var dp = new Array(n + 1).fill(0);
     dp[0] = startFuel;
     for (var i = 0; i < n; i++) {
-        for (var j = 0; j <= i; j++) {
-            if (dp[i] >= stations[i][0]) {
-                dp[i + 1] = Math.max(dp[i], stations[i][1] + dp[i]);
+        for (var j = i; j >= 0; j--) {
+            if (dp[j] >= stations[i][0]) {
+                dp[j + 1] = Math.max(dp[j + 1], stations[i][1] + dp[j]);
             }
         }
     }
