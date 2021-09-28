@@ -5,27 +5,15 @@
  * @return {string[]}
  */
 var findMissingRanges = function (nums, lower, upper) {
-    if (nums.length === 0) {
-        if (lower === upper) return [`${lower}`];
-        return [`${lower}->${upper}`];
-    }
     var ans = [];
-    if (nums[0] > lower) {
-        const max = nums[0] - 1;
-        if (max === lower) ans.push(`${max}`);
-        else ans.push(`${lower}->${max}`);
-    }
-    for (var i = 1; i < nums.length; i++) {
-        const min = nums[i - 1] + 1;
-        const max = nums[i] - 1;
-        if (max < min) continue;
-        if (min === max) ans.push(`${min}`);
-        else ans.push(`${min}->${max}`);
-    }
-    if (nums[nums.length - 1] < upper) {
-        const min = nums[nums.length - 1] + 1;
-        if (min === upper) ans.push(`${min}`);
-        else ans.push(`${min}->${upper}`);
+    var low = lower - 1;
+    nums.push(upper + 1);
+    var diff;
+    for (var num of nums) {
+        diff = num - low;
+        if (diff === 2) ans.push(low + 1 + '');
+        else if (diff > 2) ans.push(`${low + 1}->${num - 1}`);
+        low = num;
     }
     return ans;
 };
