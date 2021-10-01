@@ -4,5 +4,4 @@
  */
 var gameOfLife = function(board) {
 
-    
 };
