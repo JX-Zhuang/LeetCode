@@ -5,5 +5,4 @@
  */
 var addBoldTag = function (s, words) {
 
-    
 };
