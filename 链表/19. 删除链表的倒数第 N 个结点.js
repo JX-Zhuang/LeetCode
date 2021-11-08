@@ -10,6 +10,15 @@
  * @param {number} n
  * @return {ListNode}
  */
-var removeNthFromEnd = function(head, n) {
-
+var removeNthFromEnd = function (head, n) {
+    var arr = [];
+    while (head) {
+        arr.push(head);
+        head = head.next;
+    }
+    var l = arr.length;
+    if (n === l) return arr[1] ? arr[1] : null;
+    if (n === 0) arr[l - 2].next = null;
+    else arr[l - n - 1].next = arr[l - n].next;
+    return arr[0];
 };
