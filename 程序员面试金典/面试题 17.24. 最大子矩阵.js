@@ -3,24 +3,26 @@
  * @return {number[]}
  */
 var getMaxMatrix = function (matrix) {
-    var ans = [], m = matrix.length, n = matrix[0].length, sum, max = Number.MIN_SAFE_INTEGER;
-    for (var i = 0; i < m; i++) {
-        sum = new Array(n).fill(0);
-        for (var j = i; j < m; j++) {
-            var start = 0, dp = 0;
-            for (var k = 0; k < n; k++) {
-                sum[k] += matrix[j][k];
-                dp += sum[k];
-                if (dp > max) {
-                    ans = [i, start, j, k];
-                    max = dp;
-                }
-                if (dp < 0) {
-                    dp = 0;
-                    start = k + 1;
-                }
-            }
+  var max = Number.MIN_SAFE_INTEGER;
+  var n = matrix.length,m = matrix[0].length;
+  var ans = [],sum;
+  for(var i = 0;i<n;i++){
+    sum = Array(m).fill(0);
+    for(var j = i;j<n;j++){
+      var dp = 0,start = 0;
+      for(var k = 0;k<m;k++){
+        sum[k]+=matrix[j][k];
+        dp+=sum[k];
+        if(dp>max){
+          max = dp;
+          ans = [i,start,j,k];
         }
+        if(dp<0){
+          dp = 0;
+          start = k+1;
+        }
+      }
     }
-    return ans;
+  }
+  return ans;
 };
