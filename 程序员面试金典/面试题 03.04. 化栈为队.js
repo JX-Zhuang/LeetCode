@@ -12,9 +12,6 @@ var MyQueue = function () {
  * @return {void}
  */
 MyQueue.prototype.push = function (x) {
-    while (this.s2.length !== 0) {
-        this.s1.push(this.s2.pop());
-    }
     this.s1.push(x);
 };
 
@@ -32,8 +29,10 @@ MyQueue.prototype.pop = function () {
  * @return {number}
  */
 MyQueue.prototype.peek = function () {
-    while (this.s1.length !== 0) {
-        this.s2.push(this.s1.pop());
+    if (this.s2.length == 0) {
+        while (this.s1.length !== 0) {
+            this.s2.push(this.s1.pop());
+        }
     }
     return this.s2[this.s2.length - 1];
 };
