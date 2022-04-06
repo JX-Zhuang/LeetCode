@@ -3,6 +3,7 @@
  * @param {number} numRows
  * @return {string}
  */
+
 var convert = function (s, numRows) {
     if (numRows <= 1) return s;
     var arr = new Array(numRows).fill('');
