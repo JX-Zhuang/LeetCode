@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var jobScheduling = function (startTime, endTime, profit) {
+            var total = [];
+            var l = endTime.length;
+            for (var i = 0; i < l; i++) {
+                total.push([
+                    startTime[i],
+                    endTime[i],
+                    profit[i]
+                ]);
+            }
+            total.sort((a, b) => a[1] - b[1]);
+            var dp = new Array(l).fill(0);
+            for (var i = 0; i < l; i++) {
+                var index = 0;
+                for (var j = 0; j < i; j++) {
+                    if (total[j][1] <= total[i][0]) {
+                        index = j;
+                    }
+                }
+                dp[i + 1] = Math.max(dp[i], dp[index] + total[i][2]);
+            }
+            console.log(dp, total)
+            return dp[l];
+        };
+        jobScheduling([1, 2, 3, 3], [3, 4, 5, 6], [50, 10, 40, 70]);
+    </script>
+</body>
+
+</html>
